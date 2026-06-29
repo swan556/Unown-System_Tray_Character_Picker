@@ -1,13 +1,54 @@
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QGridLayout, QLineEdit, QPushButton, QLabel, QScrollArea
-from PySide6.QtGui import Qt
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QGridLayout, QLineEdit, QPushButton, QLabel, QScrollArea, QListView
+from PySide6.QtGui import Qt as Qtgui
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
 import json
+import pandas as pd
+
+class CharacterModel(QAbstractListModel):
+    def __init__(self, characters: list[dict], parent=None):
+        super().__init__(parent)
+        self.all_data = characters
+        self.visible = characters[:]
+    
+    def rowCount(self, parent=QModelIndex()) -> int:
+        if parent.isValid(): return 0
+        return len(self.visible)
+    
+    def data(self, index: QModelIndex, role: int = Qt.ItemDataRole.DisplayRole):
+        if not index.isValid() or index.row() >= len(self.visible):
+            return None
+        
+        item = self.visible[index.row()]
+        if role == Qt.ItemDataRole.DisplayRole: return f"{item["char"]} {item["tags"]}"
+        if role == Qt.ItemDataRole.UserRole: return f"{item["char"]}"
+        return None
+    
+    def filter(self, text):
+        self.beginResetModel()
+        q = text.lower().strip()
+
+        if q:
+            self.visible = [
+                c for c in self.all_data if q in c['tags']
+            ]
+        else: self.visible = self.all_data[:]
+
+        self.endResetModel()
+
+    
 
 class PickerPopup(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowFlags(Qt.WindowType.Tool | Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
+        self.setWindowFlags(Qtgui.WindowType.Tool | Qtgui.WindowType.FramelessWindowHint | Qtgui.WindowType.WindowStaysOnTopHint)
         self.setFixedSize(785, 440)
+        self.complete_data: list[dict] = []
+        with open("assets/complete_data.json", "r", encoding="utf-8") as f:
+            self.complete_data = json.load(f)
+
         self.build_ui()
+            
+
     
     def build_ui(self):
         root = QVBoxLayout(self)
@@ -18,14 +59,12 @@ class PickerPopup(QWidget):
         self.search.setPlaceholderText("search something...")
         root.addWidget(self.search)
 
-        self.scrollable_emoji_tray = QScrollArea()
-        self.scrollable_emoji_tray.setMinimumHeight(320)
-        self.scrollable_emoji_tray.setWidgetResizable(True)
-        self.scrollable_emoji_tray.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.character_list = QWidget()
-        self.scrollable_emoji_tray.setWidget(self.character_list)
-        root.addWidget(self.scrollable_emoji_tray)
-        self.load_emojis()
+        self.model = CharacterModel(characters=self.complete_data)
+        self.char_view = QListView()
+        self.char_view.setModel(self.model)
+        self.char_view.setSpacing(2)
+        root.addWidget(self.char_view)
+        # self.load_emojis()
 
         buffer_row = QHBoxLayout()
         self.buffer_display = QLabel("")
@@ -50,7 +89,7 @@ class PickerPopup(QWidget):
 
 
     def _on_search(self, str):
-        print(str)
+        self.model.filter(str)
     def _on_copy(self, str):
         print(f"copy triggered: {str}")
     def _on_emoji_click(self, new_emoji):
@@ -60,18 +99,15 @@ class PickerPopup(QWidget):
 
     def load_emojis(self):
         kaomoji_data = {}
-        filepath = "assets/emoticon_dict.json"
-        with open(filepath, 'r', encoding="utf-8") as f:
-            kaomoji_data = json.load(f)
-        
+        complete_data = pd.read_csv('assets/complete_data.csv')
+        data_len = len(complete_data)
         self.emoji_tray = QGridLayout()
         
 
         row = 0
         col = 0
-        for index, key in enumerate(kaomoji_data):
-            if index>=100: break
-
+        for i in range(data_len):
+            key = complete_data.iloc[i]["char"]
             kaomoji = QPushButton(f"{key}")
             kaomoji.setFixedSize(100, 50)
             kaomoji.setContentsMargins(4,4,4,4)
@@ -82,4 +118,4 @@ class PickerPopup(QWidget):
                 col = 0
                 row += 1
 
-        self.character_list.setLayout(self.emoji_tray)
+        # self.character_list.setLayout(self.emoji_tray)
