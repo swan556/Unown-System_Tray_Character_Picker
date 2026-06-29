@@ -3,6 +3,7 @@ import os
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon
 from src.ui.popup import PickerPopup
+import qdarktheme
 
 os.environ["QT_LOGGING_RULES"] = "qt.text.font.*=false"
 
@@ -17,6 +18,7 @@ class UnownApp(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
+    qdarktheme.setup_theme("dark")
     window = UnownApp()
     window.show()
     sys.exit(app.exec())
