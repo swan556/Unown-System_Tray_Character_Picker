@@ -20,7 +20,7 @@ class CharacterModel(QAbstractListModel):
             return None
         
         item = self.visible[index.row()]
-        if role == Qt.ItemDataRole.DisplayRole: return f"{item["char"]} {item["tags"]}"
+        if role == Qt.ItemDataRole.DisplayRole: return f"{item["char"]}"
         if role == Qt.ItemDataRole.UserRole: return f"{item["char"]}"
         return None
     
@@ -46,11 +46,8 @@ class PickerPopup(QWidget):
         self.complete_data: list[dict] = []
         with open("assets/complete_data.json", "r", encoding="utf-8") as f:
             self.complete_data = json.load(f)
-
         self.build_ui()
-            
 
-    
     def build_ui(self):
         root = QVBoxLayout(self)
         root.setSpacing(6)
@@ -64,22 +61,8 @@ class PickerPopup(QWidget):
         self.char_view = QListView()
         self.char_view.setModel(self.model)
         self.char_view.setSpacing(2)
+        self.char_view.setStyleSheet("font-size: 18px;")
         root.addWidget(self.char_view)
-        # self.load_emojis()
-
-        # buffer_row = QHBoxLayout()
-        # self.buffer_display = QLabel("")
-        # self.buffer_display.setMinimumWidth(160)
-
-        # self.copy_button = QPushButton("copy")
-        # self.clear_button = QPushButton("X")
-        # self.clear_button.setFixedWidth(28)
-
-        # buffer_row.addWidget(self.buffer_display)
-        # buffer_row.addStretch()
-
-        # buffer_row.addWidget(self.copy_button)
-        # buffer_row.addWidget(self.clear_button)
         self.buffer_row = AccumulationBuffer()
         root.addWidget(self.buffer_row)
 
@@ -91,25 +74,12 @@ class PickerPopup(QWidget):
         if char:
             self.buffer_row._on_emoji_click(char)
 
-
-
-
-    # def _on_search(self, str):
-    #     self.model.filter(str)
-    # def _on_copy(self, str):
-    #     print(f"copy triggered: {str}")
-    # def _on_emoji_click(self, new_emoji):
-    #     cur_buffer_text = self.buffer_display.text()
-    #     self.buffer_display.setText(cur_buffer_text+new_emoji)
-
-
     def load_emojis(self):
         kaomoji_data = {}
         complete_data = pd.read_csv('assets/complete_data.csv')
         data_len = len(complete_data)
         self.emoji_tray = QGridLayout()
         
-
         row = 0
         col = 0
         for i in range(data_len):
@@ -117,11 +87,8 @@ class PickerPopup(QWidget):
             kaomoji = QPushButton(f"{key}")
             kaomoji.setFixedSize(100, 50)
             kaomoji.setContentsMargins(4,4,4,4)
-            # kaomoji.clicked.connect(lambda checked=False, k=key: self._on_emoji_click(k))
             self.emoji_tray.addWidget(kaomoji, row, col)
             col += 1
             if col >= 7:
                 col = 0
                 row += 1
-
-        # self.character_list.setLayout(self.emoji_tray)
