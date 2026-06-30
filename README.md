@@ -1,52 +1,167 @@
-# 🧃 Emoji Tray — A Clean Emoji Picker for Linux (PySide6)
+<p align="center">
+  <img src="docs/icon.png" alt="Unown Icon" width="128">
+</p>
 
-This is a simple emoji tray app built using PySide6. It pops up at a corner, lets you click an emoji, and inserts it into most applications using simulated keypresses.
+<h1 align="center">Unown</h1>
 
----
-
-## 🚀 Features
-
-- 📌 Always-on-top emoji popup
-- 🖱️ Mouse-based selection (no need to type or tab through)
-- 💻 Works across most apps by simulating keypresses
-- 🧠 Clean and modern PySide6 interface
-- 🪄 Configurable keyboard shortcut (e.g., `Super + .`)
+<p align="center">
+  A fast, lightweight emoji & kaomoji picker for Linux, built with <b>PySide6</b>.
+  <br>
+  Inspired by <b>rofimoji</b>, with powerful search and multi-item clipboard support.
+</p>
 
 ---
 
-## ⚙️ Setup Instructions
+## ✨ Features
 
-### 1. Clone the Repo
+- 😀 Browse thousands of emojis and kaomojis.
+- 🔍 Instant search by tags.
+- 📋 Accumulate multiple emojis/kaomojis before copying.
+- ⚡ Lightweight PySide6 desktop application.
+- 🎨 Modern, keyboard-friendly interface.
+- 🐧 Designed as a feature-rich alternative to **rofimoji**.
+
+---
+
+## 📸 Preview
+
+### Main Window
+
+> Replace with an actual screenshot.
+
+<p align="center">
+  <img src="docs/screenshots/main.png" width="900">
+</p>
+
+---
+
+### Search
+
+> Replace with an actual screenshot.
+
+<p align="center">
+  <img src="docs/screenshots/search.png" width="900">
+</p>
+
+---
+
+### Clipboard Buffer
+
+> Replace with an actual screenshot.
+
+<p align="center">
+  <img src="docs/screenshots/buffer.png" width="900">
+</p>
+
+---
+
+## 🚀 Installation
+
+Clone the repository.
 
 ```bash
-git clone https://github.com/yourname/emoji-tray.git
-cd emoji-tray
+git clone https://github.com/<your-username>/Unown.git
+cd Unown
 ```
-### create and Activate your venv
+
+Run the installer.
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+chmod +x install.sh
+./install.sh
 ```
 
-### how to launch
+The installer will:
+
+- Copy Unown to `~/.local/share/unown`
+- Create an isolated Python virtual environment
+- Install all required dependencies
+- Create the `unown` launcher
+- Install the desktop entry and icon
+- Optionally replace JaKooLit's default emoji shortcut (`Super + Alt + E`)
+
+Launch using
 
 ```bash
-python3 ./src/tray/main.py
+unown
 ```
 
-## Add custom shortcut
+---
 
-1. Search for "Keyboard Shortcuts" in your Linux Mint (or other DE).
+## ⌨️ Default Shortcut
 
-2. Click "Add custom shortcut"
+If installed with the optional Hyprland integration:
 
-3. Name: Emoji Tray
-Command:
-``` bash
-    /full/path/to/your/project/venv/bin/python /full/path/to/your/project/main.py
+| Shortcut            | Action       |
+| ------------------- | ------------ |
+| **Super + Alt + E** | Launch Unown |
+
+---
+
+## 📖 Why Unown?
+
+Most emoji pickers—including **rofimoji**—copy a single emoji and immediately exit.
+
+Unown introduces an accumulation buffer, allowing you to:
+
+- Click multiple emojis
+- Mix emojis and kaomojis
+- Build a complete message
+- Copy everything in one action
+
+Example:
+
+```text
+😀✨╰(*°▽°*)╯🎉
 ```
-    Shortcut: Press your desired combo, e.g., Super + .
 
-✅ Now you can launch the emoji tray anywhere using that shortcut.
+instead of repeatedly reopening the picker.
+
+---
+
+## 🛠 Built With
+
+- Python
+- PySide6
+- qdarktheme
+
+---
+
+## 📂 Project Structure
+
+```text
+Unown/
+├── assets/
+├── src/
+│   ├── ui/
+│   └── ...
+├── main.py
+├── install.sh
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 📌 Roadmap
+
+- [ ] Favorites
+- [ ] Recently used emojis
+- [ ] Unicode category filters
+- [ ] Custom themes
+- [ ] Emoji skin tone support
+- [ ] Wayland clipboard improvements
+
+---
+
+## 🤝 Contributing
+
+Issues, feature requests, and pull requests are welcome.
+
+If you find a bug or have an idea for a feature, feel free to open an issue.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
