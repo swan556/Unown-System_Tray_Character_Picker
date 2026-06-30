@@ -7,7 +7,7 @@
 <p align="center">
   A fast, lightweight emoji & kaomoji picker for Linux, built with <b>PySide6</b>.
   <br>
-  Inspired by <b>rofimoji</b>, with powerful search and multi-item clipboard support.
+  Inspired by <b>RofiEmoji</b>, with powerful search and multi-item clipboard support.
 </p>
 
 ---
@@ -18,8 +18,8 @@
 - 🔍 Instant search by tags.
 - 📋 Accumulate multiple emojis/kaomojis before copying.
 - ⚡ Lightweight PySide6 desktop application.
-- 🎨 Modern, keyboard-friendly interface.
-- 🐧 Designed as a feature-rich alternative to **rofimoji**.
+- 🎨 Modern interface.
+- 🐧 Designed as a feature-rich alternative to **RofiEmoji**.
 
 ---
 
@@ -27,30 +27,16 @@
 
 ### Main Window
 
-> Replace with an actual screenshot.
-
 <p align="center">
-  <img src="docs/screenshots/main.png" width="900">
+  <img src="docs/screenshots/main_application.png" width="70%">
 </p>
 
 ---
 
-### Search
-
-> Replace with an actual screenshot.
-
+### 👀 User's View
 <p align="center">
-  <img src="docs/screenshots/search.png" width="900">
-</p>
-
----
-
-### Clipboard Buffer
-
-> Replace with an actual screenshot.
-
-<p align="center">
-  <img src="docs/screenshots/buffer.png" width="900">
+  <img src="docs/screenshots/whole.png" width="48%">
+  <img src="docs/screenshots/bigger.png" width="48%">
 </p>
 
 ---
