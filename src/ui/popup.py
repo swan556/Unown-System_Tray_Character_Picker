@@ -102,5 +102,6 @@ class PickerPopup(QWidget):
 
         self.search.setStyleSheet("font-size: 20px;")
         self.search.setContentsMargins(1,1,1,1)
+        self.search.setFixedHeight(40)
 
 

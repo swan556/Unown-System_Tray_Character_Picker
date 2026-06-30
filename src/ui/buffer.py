@@ -16,32 +16,74 @@ class AccumulationBuffer(QWidget):
         self.build_ui()
 
     def build_ui(self):
-        buffer_row = QHBoxLayout()
-        self.setLayout(buffer_row)
+        self.buffer_row = QHBoxLayout()
+        self.setLayout(self.buffer_row)
 
         self.buffer_display = QLabel("")
-        # self.buffer_display.setFixedWidth(680)
-        self.buffer_display.setContentsMargins(0, 0, 0, 0)
-
 
         self.copy_button = QPushButton("copy")
         self.clear_button = QPushButton("X")
+
+
+        self.buffer_row.addWidget(self.buffer_display, 1)
+        self.buffer_row.addStretch()
+        self.buffer_row.addWidget(self.copy_button)
+        self.buffer_row.addWidget(self.clear_button)
+
+        self.add_connections()
+        self.set_style()
+    
+    def set_style(self):
+        
+        self.buffer_display.setContentsMargins(0, 0, 0, 0)
+        
         self.clear_button.setFixedWidth(38)
         self.copy_button.setContentsMargins(1,1,1,1)
         self.clear_button.setContentsMargins(1,1,1,1)
-
-        self.copy_button.setFixedHeight(40)
-        self.clear_button.setFixedHeight(40)
+        
+        self.copy_button.setFixedHeight(38)
+        self.clear_button.setFixedHeight(38)
         self.copy_button.setFixedWidth(90)
 
-        buffer_row.addWidget(self.buffer_display, 1)
-        buffer_row.addStretch()
-        buffer_row.addWidget(self.copy_button)
-        buffer_row.addWidget(self.clear_button)
-        buffer_row.setContentsMargins(1,1,1,1)
-        buffer_row.setSpacing(0)
+        self.buffer_row.setContentsMargins(1,1,1,1)
+        self.buffer_row.setSpacing(0)
 
-        self.add_connections()
+        self.copy_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                font-weight: normal;
+                border: none;
+            }
+
+            QPushButton:hover {
+                color: #4FC3F7;
+                font-weight: bold;
+            }
+
+            QPushButton:pressed {
+                color: #2196F3;
+                font-weight: bold;
+            }
+            """)
+        
+        self.clear_button.setStyleSheet("""
+            QPushButton {
+                color: white;
+                font-weight: normal;
+                border: none;
+            }
+
+            QPushButton:hover {
+                color: #4FC3F7;
+                font-weight: bold;
+            }
+
+            QPushButton:pressed {
+                color: #2196F3;
+                font-weight: bold;
+            }
+            """)
+
     
     def add_connections(self):
         self.clear_button.clicked.connect(lambda: self._on_clear())
