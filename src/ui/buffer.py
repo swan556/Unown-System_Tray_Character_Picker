@@ -5,6 +5,14 @@ class AccumulationBuffer(QWidget):
     changed = Signal(str)
     def __init__(self, parent=None):
         super().__init__(parent)
+        # self.setStyleSheet("")
+        self.setStyleSheet("""
+            QWidget {
+                background-color: rgba(30, 30, 30, 180);
+                border-radius: 16px;
+                font-size: 25px;
+            }
+            """)
         self.chars: list[str] = []
         self.build_ui()
 
@@ -13,7 +21,7 @@ class AccumulationBuffer(QWidget):
         self.setLayout(buffer_row)
 
         self.buffer_display = QLabel("")
-        self.buffer_display.setMinimumWidth(160)
+        self.buffer_display.setMinimumWidth(400)
         self.buffer_display.setContentsMargins(4, 0, 0, 0)
 
         self.copy_button = QPushButton("copy")
