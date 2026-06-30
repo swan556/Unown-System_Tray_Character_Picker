@@ -8,11 +8,10 @@ class AccumulationBuffer(QWidget):
         # self.setStyleSheet("")
         self.setStyleSheet("""
             QWidget {
-                background-color: rgba(30, 30, 30, 180);
-                border-radius: 16px;
-                font-size: 25px;
+                font-size: 22px;
             }
             """)
+        self.setFixedHeight(40)
         self.chars: list[str] = []
         self.build_ui()
 
@@ -21,17 +20,26 @@ class AccumulationBuffer(QWidget):
         self.setLayout(buffer_row)
 
         self.buffer_display = QLabel("")
-        self.buffer_display.setMinimumWidth(400)
-        self.buffer_display.setContentsMargins(4, 0, 0, 0)
+        # self.buffer_display.setFixedWidth(680)
+        self.buffer_display.setContentsMargins(0, 0, 0, 0)
+
 
         self.copy_button = QPushButton("copy")
         self.clear_button = QPushButton("X")
-        self.clear_button.setFixedWidth(28)
+        self.clear_button.setFixedWidth(38)
+        self.copy_button.setContentsMargins(1,1,1,1)
+        self.clear_button.setContentsMargins(1,1,1,1)
 
-        buffer_row.addWidget(self.buffer_display)
+        self.copy_button.setFixedHeight(40)
+        self.clear_button.setFixedHeight(40)
+        self.copy_button.setFixedWidth(90)
+
+        buffer_row.addWidget(self.buffer_display, 1)
         buffer_row.addStretch()
         buffer_row.addWidget(self.copy_button)
         buffer_row.addWidget(self.clear_button)
+        buffer_row.setContentsMargins(1,1,1,1)
+        buffer_row.setSpacing(0)
 
         self.add_connections()
     
@@ -46,7 +54,6 @@ class AccumulationBuffer(QWidget):
         
     def _on_copy(self):
         if self.chars:
-            print(self.chars)
             QApplication.clipboard().setText("".join(self.chars))
             self.chars.clear()
 
