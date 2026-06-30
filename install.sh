@@ -104,7 +104,7 @@ if [ -f assets/icon.png ]; then
 fi
 
 # Optional Hyprland integration
-HYPR_CONF="$HOME/.config/hypr/hyprland.conf"
+HYPR_CONF="$HOME/.config/hypr/configs/Keybinds.conf"
 
 if [ -f "$HYPR_CONF" ]; then
     echo

@@ -4,6 +4,9 @@ from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
 import json
 import pandas as pd
 from src.ui.buffer import AccumulationBuffer
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parents[2]
+ASSETS_DIR = BASE_DIR / "assets"
 
 class CharacterModel(QAbstractListModel):
     def __init__(self, characters: list[dict], parent=None):
@@ -46,9 +49,9 @@ class PickerPopup(QWidget):
 
         self.emoji_data: list[dict] = []
         self.kaomoji_data: list[dict] = []
-        with open("assets/emoji_data.json", "r", encoding="utf-8") as f:
+        with open(ASSETS_DIR / "emoji_data.json", "r", encoding="utf-8") as f:
             self.emoji_data = json.load(f)
-        with open("assets/kaomoji_data.json", "r", encoding="utf-8") as f:
+        with open(ASSETS_DIR / "kaomoji_data.json", "r", encoding="utf-8") as f:
             self.kaomoji_data = json.load(f)
         self.build_ui()
 

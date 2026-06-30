@@ -4,7 +4,9 @@ from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon, QFont
 from PySide6.QtCore import Qt
 from src.ui.popup import PickerPopup
-import qdarktheme
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parents[2]
+ASSETS_DIR = BASE_DIR / "assets"
 
 os.environ["QT_LOGGING_RULES"] = (
     "qt.text.font.warning=false;"
@@ -17,7 +19,7 @@ class UnownApp(QMainWindow):
         super().__init__()
         self.setWindowTitle("Unown")
         self.setFixedWidth(785)
-        self.setWindowIcon(QIcon("./assets/icon.png"))
+        self.setWindowIcon(QIcon(str(ASSETS_DIR / "icon.png")))
         self.setStyleSheet("""
             QWidget {
                 background-color: rgba(30, 30, 30, 180);
